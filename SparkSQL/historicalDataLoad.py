@@ -2,8 +2,8 @@ from pyspark.sql import *
 from pyspark.sql.functions import *
 
 spark = SparkSession.builder.master("local").appName("test").getOrCreate()
-Access_key_ID="AKIA237T4XAPP2TXLQMM"
-Secret_access_key="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"
+Access_key_ID="XXXX"
+Secret_access_key="XXXX"
 # Enable hadoop s3a settings
 spark.sparkContext._jsc.hadoopConfiguration().set("com.amazonaws.services.s3.enableV4", "true")
 spark.sparkContext._jsc.hadoopConfiguration().set("fs.s3a.impl", "org.apache.hadoop.fs.s3a.S3AFileSystem")
