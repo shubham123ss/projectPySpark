@@ -1,7 +1,7 @@
 from pyspark.sql import *
 from pyspark.sql.functions import *
 
-spark = SparkSession.builder.master("local").appName("test").getOrCreate()
+spark = SparkSession.builder.master("local").appName("test").enableHiveSupport().getOrCreate()
 Access_key_ID="XXXX"
 Secret_access_key="XXXX"
 # Enable hadoop s3a settings
@@ -26,7 +26,9 @@ df=spark.read.format('csv').option("header","true").option("inferSchema","true")
 #creating a table as history in sparkSQL and saving the data in history table
 df.createOrReplaceTempView("history")
 ndf=spark.sql("select created_at, actual_delivery_time,(bigint(to_timestamp(actual_delivery_time))) - (bigint(to_timestamp(created_at))) as time_diff from history")
+
 #ndf.write.mode("overwrite").format("jdbc").option("url",host).option("dbtable","time_diff").option("user",uname).option("password",pwd).option("driver","com.mysql.jdbc.Driver").save()
+df.write.saveAsTable("historical_data")
 ndf.show(100,truncate=False)
 ndf.printSchema()
 
